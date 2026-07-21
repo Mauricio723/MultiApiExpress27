@@ -1,0 +1,163 @@
+Datos eliminados del proyecto para verificar:
+
+galeriaImgRouter.get("/crear_tabla_imagenes", GaleriaImgController.crearTablaDatosImagenes); 
+
+ static async crearTablaDatosImagenes(req, res) {
+        const datosReturnCreate = await GaleriaImgModelProd.crearTablaImagenes(); 
+
+        res.json(datosReturnCreate); 
+        
+    }
+
+
+ static async crearTablaImagenes() {
+        const string_query = "CREATE TABLE galeria_pinturas (id INT AUTO_INCREMENT PRIMARY KEY, " 
+                + "titulo_img VARCHAR(100) NOT NULL, " 
+                + "url_imagen VARCHAR(250) NOT NULL, " 
+                + "orden_imagen INT, "
+                + "id_pintor INT NOT NULL, FOREIGN KEY (id_pintor) REFERENCES galeria_pintores(id));";
+
+        const retornoAlCrearTablaImg = await dbconnection.query(string_query); 
+
+        return retornoAlCrearTablaImg;
+    }
+
+ static async agregarImagenesConPintores(listaDatosParaGuardar) {
+
+        let string_values = ""; 
+
+        let esElPrimerElemento = true;
+
+        listaDatosParaGuardar.forEach(dato_imagen => {
+            if (esElPrimerElemento) {
+                 string_values += "('" + dato_imagen.titulo_img + "', '" 
+                + dato_imagen.url_imagen + "', " 
+                + dato_imagen.orden_img + ", " 
+                + dato_imagen.id_pintor + ")";
+
+                esElPrimerElemento = false;
+
+            } else {
+                 string_values += ", ('" + dato_imagen.titulo_img + "', '" 
+                + dato_imagen.url_imagen + "', " 
+                + dato_imagen.orden_img + ", " 
+                + dato_imagen.id_pintor + ")";
+            }
+           
+        });
+
+
+        const string_query = "INSERT INTO galeria_pinturas " 
+            + "(titulo_img, url_imagen, orden_imagen, pintor_id) VALUES " 
+            + string_values + ";"; 
+
+        const retornoGuardarImagen = await dbconnection.query(string_query);
+        
+        //return string_query;
+
+        return retornoGuardarImagen;
+
+    }
+
+static async agregarPintor(lista_pintores) {
+
+        let stringValuesPintores = "";
+
+        let esPrimerPintor = true;
+
+        lista_pintores.forEach(pintor => {
+        
+            if (pintor.nombre_pintor !== "pintor sin definir") {
+                if(esPrimerPintor) {
+                    stringValuesPintores += "('" + pintor.nombre_pintor + "')";
+                    esPrimerPintor = false;
+
+                } else {
+                    stringValuesPintores += ", ('" + pintor.nombre_pintor + "')";
+                }
+                 
+            }
+
+        });
+
+        const string_query = "INSERT INTO galeria_pintores (nombre_pintor)" 
+            + " VALUES " + stringValuesPintores + ";"; 
+
+        console.log("string con values: ", string_query); 
+            
+        const retornoAgregandoPintor = await dbconnection.query(string_query); 
+
+        return retornoAgregandoPintor;      
+
+        //return string_query;
+    }
+
+
+
+galeriaImgRouter.get("/guardar_imagenes_con_pintores", GaleriaImgController.guardarImagenesConPintores); 
+
+
+
+ static async guardarImagenesConPintores(req, res) {
+
+
+        const datosPintores = await GaleriaImgModelProd.obtenerPintoresProd();
+
+        console.log(datosPintores);
+
+
+        const listaImagenesConPintores = await GaleriaImgModel.obtenerImagenesConPintores();
+
+        let listaDatosParaGuardar = [];
+
+        let idPintor = 0;
+
+        //console.log(listaImagenesConPintores);
+
+
+        datosPintores.forEach(pintor => {
+            listaImagenesConPintores.forEach(dato_imagen => {
+
+                if (pintor.nombre_pintor === dato_imagen.nombre_pintor) {
+
+                    listaDatosParaGuardar.push({
+                    titulo_img: dato_imagen.titulo_img,
+                    url_imagen: dato_imagen.url_imagen,
+                    orden_img: dato_imagen.orden_img,
+                    id_pintor: pintor.id, 
+                    nombre_pintor: dato_imagen.nombre_pintor
+                });
+
+                }
+                
+            });
+
+        });
+
+
+        const resGuardarImgConPintores = await GaleriaImgModelProd.agregarImagenesConPintores(listaDatosParaGuardar); 
+
+
+        res.json(resGuardarImgConPintores);
+
+        //res.json(listaDatosParaGuardar);
+
+    }
+
+static async obtenerPintoresAgregar(req, res) {
+
+        const listaPintores = await GaleriaImgModel.obtenerPintores();
+
+        console.log("pintores: ", listaPintores);
+
+
+        const returnPintoresNuevos = await GaleriaImgModelProd.agregarPintor(listaPintores);
+
+        console.log("retorno pintores nuevos: ", returnPintoresNuevos);
+
+        res.json(listaPintores);
+    }
+
+galeriaImgRouter.get("/obtener_pintores_agregar", GaleriaImgController.obtenerPintoresAgregar); 
+
+

@@ -1,0 +1,29 @@
+# Herramienta para servir páginas estaticas: 
+
+    // en línea de comandos:
+    // se le pasa la carpeta donde se encuentra la página web. 
+
+        npx servor ./web
+
+    Con esto, se sirve la página web en: http://localhost:8080 
+
+
+# con npx serve se crea un servidor local para páginas estáticas. Solo hay que tener 
+instalado Node.js en la computadora. 
+
+1. Abrir la terminal o consola de comandos. 
+
+2. Entrar en la carpeta del proyecto web usando el comando cd . 
+
+    ejemplo: cd documentos/my_web
+
+3. Ejecutar el siguiente comando para iniciar el servidor: 
+
+    npx serve 
+
+4. Copiar la dirección local que aparecerá el la pantalla y pegarla 
+   en el navegador web.
+
+   por ejemplo: http://localhost:3000 
+
+
