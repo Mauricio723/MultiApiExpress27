@@ -3,18 +3,25 @@ import { GaleriaImgModelProd } from "./modelo_galeria_prod.js";
 
 export class GaleriaImgController {
 
-    static async obtener_imagenes(req, res) {
-        const datos_imagenes = await GaleriaImgModel.obtenerImagenes();
+    static async obtener_pinturas(req, res) {
+        const datosPinturas = await GaleriaImgModelProd.obtenerPinturas();
 
-        res.json(datos_imagenes);
+        res.json(datosPinturas);
     }
 
-    static async obtener_imagenes_por_pintor(req, res) {
+    static async obtenerPintores(req, res) {
+
+        const datosPintores = await GaleriaImgModelProd.obtenerPintoresProd(); 
+
+        res.json(datosPintores); 
+    }
+
+    static async obtener_pinturas_por_pintor(req, res) {
 
         const id_pintor = req.params.id_pintor;
 
         //console.log("id pintor ingresado: ", id_pintor);
-        const lista_imagenes = await GaleriaImgModel.obtenerImagenesPorIdPintor(id_pintor);
+        const lista_imagenes = await GaleriaImgModelProd.obtenerPinturasPorIdPintor(id_pintor);
 
         //console.log("lista de imagenes: ", lista_imagenes); 
 

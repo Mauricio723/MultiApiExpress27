@@ -9,9 +9,14 @@ galeriaImgRouter.get("/texto_prueba_galeria", (req, res) => {
     res.json({ mensaje: datoPruebaEnv });
 }); 
 
-galeriaImgRouter.get("/obtener_imagenes", GaleriaImgController.obtener_imagenes); 
 
-galeriaImgRouter.get("/obtener_imagenes_por_pintor/:id_pintor", GaleriaImgController.obtener_imagenes_por_pintor); 
+galeriaImgRouter.get("/obtener_pintores", GaleriaImgController.obtenerPintores); 
+
+galeriaImgRouter.get("/obtener_pinturas", GaleriaImgController.obtener_pinturas);
+
+
+galeriaImgRouter.get("/obtener_pinturas_por_pintor/:id_pintor", GaleriaImgController.obtener_pinturas_por_pintor); 
+
 
 galeriaImgRouter.get("/obtener_imagenes_con_pintores", GaleriaImgController.obtenerImagenesConPintores); 
 
