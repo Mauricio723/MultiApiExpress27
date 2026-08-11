@@ -1,4 +1,3 @@
-import { GaleriaImgModel } from "./modelo_galeria_img.js";
 import { GaleriaImgModelProd } from "./modelo_galeria_prod.js";
 
 export class GaleriaImgController {
@@ -26,16 +25,7 @@ export class GaleriaImgController {
         //console.log("lista de imagenes: ", lista_imagenes); 
 
         res.json(lista_imagenes);
-    }
-
-    static async obtenerImagenesConPintores(req, res) {
-        const listaImagenesConPintores = await GaleriaImgModel.obtenerImagenesConPintores();
-
-        console.log(listaImagenesConPintores);
-
-        res.json(listaImagenesConPintores);
-
-    } 
+    }   
 
 
 }

@@ -20,6 +20,7 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js",
     "dev-01": "nodemon app.js",
     "dev-env-01": "nodemon --env-file=.env app.js"
   },

@@ -12,7 +12,9 @@ app.use(express.json());
 app.disable("x-powered-by");
 
 app.use(cors({
-    origin: ["http://localhost:4200", "http://localhost:8080"], 
+    origin: ["http://localhost:4200", 
+        "http://localhost:8080", 
+        "https://mauricio723.github.io"], 
     credentials: true, 
     methods: ["GET", "POST", "PATCH"]
 })); 
