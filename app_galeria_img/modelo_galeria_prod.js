@@ -20,7 +20,7 @@ export class GaleriaImgModelProd {
 
     static async obtenerPinturasPorIdPintor(id_pintor) {
         
-        const string_query = "SELECT d.id AS id_pintura , d.titulo_img, d.url_imagen, "
+        const string_query = "SELECT d.id AS id_pintura , d.titulo_img, d.url_imagen, d.year_end, "
             + "d.orden_imagen, d.pintor_id, p.nombre_pintor FROM galeria_pinturas d " 
             + "INNER JOIN galeria_pintores p on d.pintor_id = p.id where d.pintor_id = ?;";
                
